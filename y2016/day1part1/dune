@@ -1,0 +1,4 @@
+(executable
+  (public_name day1part1)
+  (name main)
+  (libraries advent base stdio))
