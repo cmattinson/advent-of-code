@@ -10,3 +10,8 @@
  (modules Day02)
  (libraries core day02_lib))
 
+(executable
+ (name day03)
+ (public_name day03)
+ (modules Day03)
+ (libraries core day03_lib))

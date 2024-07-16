@@ -12,3 +12,11 @@
   (libraries core day02_lib)
   (preprocess (pps ppx_expect)))
 
+(library
+  (name day03_test)
+  (inline_tests)
+  (modules Day03_test)
+  (libraries core day03_lib)
+  (preprocess (pps ppx_expect)))
+
+
