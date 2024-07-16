@@ -12,3 +12,9 @@
   (name day03_lib)
   (modules Day03_lib)
   (libraries core))
+
+(library
+  (name day04_lib)
+  (modules Day04_lib)
+  (libraries core cryptokit))
+

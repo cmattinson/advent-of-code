@@ -15,3 +15,10 @@
  (public_name day03)
  (modules Day03)
  (libraries core day03_lib))
+
+(executable
+ (name day04)
+ (public_name day04)
+ (modules Day04)
+ (libraries core day04_lib))
+

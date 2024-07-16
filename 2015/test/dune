@@ -19,4 +19,9 @@
   (libraries core day03_lib)
   (preprocess (pps ppx_expect)))
 
-
+(library
+  (name day04_test)
+  (inline_tests)
+  (modules Day04_test)
+  (libraries core day04_lib)
+  (preprocess (pps ppx_expect)))
