@@ -1,3 +1,5 @@
+[@@@alert "-crypto"]
+
 open! Core
 open! Cryptokit
 
