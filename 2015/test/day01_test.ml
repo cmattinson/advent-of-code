@@ -23,7 +23,7 @@ let%expect_test "get_floor" =
 
 let%expect_test "basement_instruction" =
   basement_instruction ")" |> Printf.printf "%d\n";
-  [%expect];
+  [%expect {| 1 |}];
   basement_instruction "()())" |> Printf.printf "%d\n";
-  [%expect]
+  [%expect {| 5 |}]
 ;;

@@ -1,5 +1,14 @@
 (library
   (name day01_test)
   (inline_tests)
+  (modules Day01_test)
   (libraries core day01_lib)
   (preprocess (pps ppx_expect)))
+
+(library
+  (name day02_test)
+  (inline_tests)
+  (modules Day02_test)
+  (libraries core day02_lib)
+  (preprocess (pps ppx_expect)))
+

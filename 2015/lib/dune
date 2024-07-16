@@ -2,3 +2,9 @@
   (name day01_lib)
   (modules Day01_lib)
   (libraries core))
+
+(library
+  (name day02_lib)
+  (modules Day02_lib)
+  (libraries core))
+

@@ -1,4 +1,12 @@
-(executables
- (public_names day01)
- (names day01)
- (libraries core util day01_lib))
+(executable
+ (name day01)
+ (public_name day01)
+ (modules Day01)
+ (libraries core day01_lib))
+
+(executable
+ (name day02)
+ (public_name day02)
+ (modules Day02)
+ (libraries core day02_lib))
+
