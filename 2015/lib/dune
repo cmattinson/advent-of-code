@@ -1,0 +1,4 @@
+(library
+  (name day01_lib)
+  (modules Day01_lib)
+  (libraries core))
