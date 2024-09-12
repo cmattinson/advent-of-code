@@ -1,24 +1,35 @@
 (executable
- (name day01)
- (public_name day01)
- (modules Day01)
- (libraries core day01_lib))
+ (name day1)
+ (public_name day1)
+ (modules Day1)
+ (libraries core day1_lib))
 
 (executable
- (name day02)
- (public_name day02)
- (modules Day02)
- (libraries core day02_lib))
+ (name day2)
+ (public_name day2)
+ (modules Day2)
+ (libraries core day2_lib))
 
 (executable
- (name day03)
- (public_name day03)
- (modules Day03)
- (libraries core day03_lib))
+ (name day3)
+ (public_name day3)
+ (modules Day3)
+ (libraries core day3_lib))
 
 (executable
- (name day04)
- (public_name day04)
- (modules Day04)
- (libraries core day04_lib))
+ (name day4)
+ (public_name day4)
+ (modules Day4)
+ (libraries core day4_lib))
 
+(executable
+ (name day5)
+ (public_name day5)
+ (modules Day5)
+ (libraries core day5_lib))
+
+(executable
+ (name day6)
+ (public_name day6)
+ (modules Day6)
+ (libraries core day6_lib))

@@ -1,4 +1,5 @@
-open Day04_lib
+open Day4_lib
+open Util
 
 let%expect_test "hash_string" =
   hash_string "abcdef609043" |> Stdio.print_endline;
@@ -6,10 +7,10 @@ let%expect_test "hash_string" =
 ;;
 
 let%expect_test "find_lowest_num" =
-  find_lowest_num "abcdef" ~pattern:"00000" |> Printf.printf "%d\n";
+  find_lowest_num "abcdef" ~pattern:"00000" |> Display.print_int;
   [%expect {| 609043 |}];
-  find_lowest_num "pqrstuv" ~pattern:"00000" |> Printf.printf "%d\n";
+  find_lowest_num "pqrstuv" ~pattern:"00000" |> Display.print_int;
   [%expect {| 1048970 |}];
-  find_lowest_num "yzbqklnj" ~pattern:"00000" |> Printf.printf "%d\n";
+  find_lowest_num "yzbqklnj" ~pattern:"00000" |> Display.print_int;
   [%expect {| 282749 |}]
 ;;

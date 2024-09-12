@@ -1,20 +1,29 @@
 (library
-  (name day01_lib)
-  (modules Day01_lib)
+  (name day1_lib)
+  (modules Day1_lib)
   (libraries core))
 
 (library
-  (name day02_lib)
-  (modules Day02_lib)
+  (name day2_lib)
+  (modules Day2_lib)
   (libraries core))
 
 (library
-  (name day03_lib)
-  (modules Day03_lib)
+  (name day3_lib)
+  (modules Day3_lib)
   (libraries core))
 
 (library
-  (name day04_lib)
-  (modules Day04_lib)
+  (name day4_lib)
+  (modules Day4_lib)
   (libraries core cryptokit))
 
+(library
+  (name day5_lib)
+  (modules Day5_lib)
+  (libraries core))
+
+(library
+  (name day6_lib)
+  (modules Day6_lib)
+  (libraries core))

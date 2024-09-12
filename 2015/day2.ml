@@ -1,4 +1,4 @@
-open Day02_lib
+open Day2_lib
 open! Core
 
 let split_line line = String.split line ~on:'x' |> List.to_array
@@ -15,7 +15,7 @@ let solve_part1 input =
   |> List.fold ~init:0 ~f:(fun accum line ->
     let split = split_line line in
     let box = box_of_line split in
-    accum + Day02_lib.required_area box)
+    accum + Day2_lib.required_area box)
 ;;
 
 let solve_part2 input =
@@ -23,7 +23,7 @@ let solve_part2 input =
   |> List.fold ~init:0 ~f:(fun accum line ->
     let split = split_line line in
     let box = box_of_line split in
-    accum + Day02_lib.ribbon_amount box)
+    accum + Day2_lib.ribbon_amount box)
 ;;
 
 let () =

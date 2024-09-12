@@ -1,4 +1,4 @@
-open Day04_lib
+open Day4_lib
 open! Core
 
 let solve_part_1 key = find_lowest_num key ~pattern:"00000"

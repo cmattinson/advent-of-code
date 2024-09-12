@@ -1,4 +1,4 @@
-open Day03_lib
+open Day3_lib
 open! Core
 
 let solve_part1 input = input |> String.to_list |> unique_houses

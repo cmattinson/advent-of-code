@@ -1,27 +1,35 @@
 (library
-  (name day01_test)
+  (name day1_test)
   (inline_tests)
-  (modules Day01_test)
-  (libraries core day01_lib)
+  (modules Day1_test)
+  (libraries core util day1_lib)
   (preprocess (pps ppx_expect)))
 
 (library
-  (name day02_test)
+  (name day2_test)
   (inline_tests)
-  (modules Day02_test)
-  (libraries core day02_lib)
+  (modules Day2_test)
+  (libraries core util day2_lib)
   (preprocess (pps ppx_expect)))
 
 (library
-  (name day03_test)
+  (name day3_test)
   (inline_tests)
-  (modules Day03_test)
-  (libraries core day03_lib)
+  (modules Day3_test)
+  (libraries core util day3_lib)
   (preprocess (pps ppx_expect)))
 
 (library
-  (name day04_test)
+  (name day4_test)
   (inline_tests)
-  (modules Day04_test)
-  (libraries core day04_lib)
+  (modules Day4_test)
+  (libraries core util day4_lib)
   (preprocess (pps ppx_expect)))
+
+(library
+  (name day5_test)
+  (inline_tests)
+  (modules Day5_test)
+  (libraries core util day5_lib) 
+  (preprocess (pps ppx_expect)))
+

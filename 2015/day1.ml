@@ -1,5 +1,5 @@
 open Core
-open Day01_lib
+open Day1_lib
 
 let solve_part1 input = input |> get_floor |> Printf.sprintf "%d\n"
 let solve_part2 input = input |> basement_instruction |> Printf.sprintf "%d\n"
