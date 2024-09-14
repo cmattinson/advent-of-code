@@ -33,3 +33,11 @@
   (libraries core util day5_lib) 
   (preprocess (pps ppx_expect)))
 
+(library
+  (name day6_test)
+  (inline_tests)
+  (modules Day6_test)
+  (libraries core util day6_lib) 
+  (preprocess (pps ppx_expect)))
+
+
