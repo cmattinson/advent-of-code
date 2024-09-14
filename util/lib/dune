@@ -1,4 +1,4 @@
 (library
- (public_name util)
- (name util)
- (libraries core))
+  (name util)
+  (public_name util)
+  (libraries core))
