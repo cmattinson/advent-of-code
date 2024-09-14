@@ -7,8 +7,6 @@ module Instruction = struct
     ; bottom_right : int * int
     }
 
-  let init = { action = `Off; top_left = 0, 0; bottom_right = 999, 999 }
-
   let parse_pair pair =
     let split = pair |> String.split_on_chars ~on:[ ',' ] in
     match split with
@@ -56,25 +54,54 @@ module Instruction = struct
   ;;
 end
 
-let act_on_lights grid (instruction : Instruction.t) =
-  for x = fst instruction.top_left to fst instruction.bottom_right do
-    for y = snd instruction.top_left to snd instruction.bottom_right do
-      match instruction.action with
-      | `On -> grid.(x).(y) <- true
-      | `Off -> grid.(x).(y) <- false
-      | `Toggle -> grid.(x).(y) <- not grid.(x).(y)
+module P1 = struct
+  let act_on_lights grid (instruction : Instruction.t) =
+    for x = fst instruction.top_left to fst instruction.bottom_right do
+      for y = snd instruction.top_left to snd instruction.bottom_right do
+        match instruction.action with
+        | `On -> grid.(x).(y) <- true
+        | `Off -> grid.(x).(y) <- false
+        | `Toggle -> grid.(x).(y) <- not grid.(x).(y)
+      done
     done
-  done
-;;
+  ;;
 
-let count_lights grid =
-  let count = ref 0 in
-  for x = 0 to 999 do
-    for y = 0 to 999 do
-      match grid.(x).(y) with
-      | true -> count := !count + 1
-      | _ -> ()
+  let count_lights grid =
+    let count = ref 0 in
+    for x = 0 to 999 do
+      for y = 0 to 999 do
+        match grid.(x).(y) with
+        | true -> count := !count + 1
+        | _ -> ()
+      done
+    done;
+    count
+  ;;
+end
+
+module P2 = struct
+  let act_on_lights grid (instruction : Instruction.t) =
+    for x = fst instruction.top_left to fst instruction.bottom_right do
+      for y = snd instruction.top_left to snd instruction.bottom_right do
+        match instruction.action with
+        | `On -> grid.(x).(y) <- grid.(x).(y) + 1
+        | `Off ->
+          grid.(x).(y)
+          <- (match grid.(x).(y) with
+              | 0 -> 0
+              | _ -> grid.(x).(y) - 1)
+        | `Toggle -> grid.(x).(y) <- grid.(x).(y) + 2
+      done
     done
-  done;
-  count
-;;
+  ;;
+
+  let count_lights grid =
+    let count = ref 0 in
+    for x = 0 to 999 do
+      for y = 0 to 999 do
+        count := !count + grid.(x).(y)
+      done
+    done;
+    count
+  ;;
+end
