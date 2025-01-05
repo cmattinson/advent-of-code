@@ -25,9 +25,6 @@ let sum_enabled_instructions str =
   let pattern = {|mul(\([0-9]{1,3},[0-9]{1,3}\))|(do)\(\)|(don't)\(\)|} in
   let result =
     full_split ~rex:(regexp pattern) str
-    |> List.filter ~f:(function
-      | Group _ -> true
-      | _ -> false)
     |> List.fold ~init:{ sum = 0; enabled = true } ~f:(fun accum g ->
       match g with
       | Group (nr, str) ->
