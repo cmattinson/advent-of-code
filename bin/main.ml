@@ -8,7 +8,12 @@ let command =
     ~summary:"Advent of Code solutions"
     (let%map_open.Command year = flag "-y" (required string) ~doc:"year year for solution"
      and day = flag "-d" (required string) ~doc:"day day for solution"
-     and input_file = flag "-i" (optional string) ~doc:"file file used as input" in
+     and input_file =
+       flag
+         "-i"
+         (optional string)
+         ~doc:"file file used as input, relative to inputs/{year}/{day}"
+     in
      fun () ->
        let input =
          match input_file with
@@ -22,6 +27,9 @@ let command =
           | "1" -> Day1.solve (read_lines input)
           | "2" -> Day2.solve (read_lines input)
           | "3" -> Day3.solve (read_file input)
+          (* | "4" -> Day4.solve (read_lines input) *)
+          | "5" -> Day5.solve (read_lines input)
+          | "6" -> Day6.solve (read_lines input)
           | _ -> Stdio.print_endline "Day not solved")
        | _ -> Stdio.print_endline "Year not started")
 ;;

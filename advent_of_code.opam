@@ -13,7 +13,10 @@ depends: [
   "core_unix"
   "re"
   "ppx_let"
+  "ppx_compare"
+  "ppx_jane"
   "ppx_expect"
+  "ppx_deriving"
   "odoc" {with-doc}
 ]
 build: [
