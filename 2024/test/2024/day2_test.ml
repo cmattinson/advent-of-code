@@ -1,4 +1,4 @@
-open Y2024
+open Aoc
 
 let print_bool = function
   | true -> Stdio.print_endline "true"

@@ -1,7 +1,7 @@
 (library
  (inline_tests)
- (name y2024_test)
+ (name aoc_test)
  (modules Day1_test Day2_test Day3_test)
- (libraries core y2024)
+ (libraries core aoc)
  (preprocess
   (pps ppx_inline_test ppx_expect)))

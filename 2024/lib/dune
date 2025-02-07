@@ -1,5 +1,5 @@
 (library
- (name y2024)
+ (name aoc)
  (modules Day1 Day2 Day3 Day4 Day5 Day6)
  (libraries core re)
  (preprocess (pps ppx_deriving.show ppx_jane)))

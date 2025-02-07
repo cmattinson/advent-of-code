@@ -1,4 +1,4 @@
-open Y2024
+open Aoc
 open Core
 
 let%expect_test "sum_instructions" =
@@ -9,7 +9,7 @@ let%expect_test "sum_instructions" =
   [%expect {| 161 |}]
 ;;
 
-let%expect_test "sum__enabled_instructions" =
+let%expect_test "sum_enabled_instructions" =
   Printf.printf
     "%d\n"
     (Day3.sum_enabled_instructions

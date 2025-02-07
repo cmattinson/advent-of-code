@@ -1,5 +1,5 @@
 open Core
-open Y2024
+open Aoc
 
 let%expect_test "2024 Day 1 - part 1" =
   try
