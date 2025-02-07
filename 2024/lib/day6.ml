@@ -1,18 +1,18 @@
 open Core
 
-exception OutOfBounds
-
 type direction =
   | Up
   | Down
   | Left
   | Right
+[@@deriving compare, sexp]
 
 type location =
   { x : int
   ; y : int
   ; direction : direction
   }
+[@@deriving compare, sexp]
 
 module CoordinateSet = struct
   module T = struct
@@ -29,21 +29,19 @@ let get_location_grid input =
   |> Array.map ~f:(fun chars -> String.to_list chars |> List.to_array)
 ;;
 
-let location_opt x y direction = Some { x; y; direction }
-
 let find_starting_location grid =
   let rows = Array.length grid in
-  let rec iterate_rows i =
-    if i < rows
+  let rec iterate_rows y =
+    if y < rows
     then (
-      let cols = Array.length grid.(i) in
-      let rec iterate_cols j =
-        if j < cols
+      let cols = Array.length grid.(y) in
+      let rec iterate_cols x =
+        if x < cols
         then (
-          match grid.(i).(j) with
-          | '^' -> location_opt j i Up
-          | _ -> iterate_cols (j + 1))
-        else iterate_rows (i + 1)
+          match grid.(y).(x) with
+          | '^' -> Some { x; y; direction = Up }
+          | _ -> iterate_cols (x + 1))
+        else iterate_rows (y + 1)
       in
       iterate_cols 0)
     else None
@@ -67,28 +65,26 @@ let rotate location =
   | Left -> Up
 ;;
 
-let walk grid start =
+let occupied_count grid start =
   let rec walk_grid coordinates location =
-    let stepped = step location in
-    if stepped.y > Array.length grid || stepped.x > Array.length grid.(stepped.y)
-    then raise OutOfBounds
+    let next = step location
+    and height = Array.length grid
+    and width = Array.length grid.(location.y) in
+    if next.y >= height || next.x >= width
+    then coordinates
     else (
-      let step_char = grid.(stepped.y).(stepped.x) in
-      try
-        match step_char with
-        | '#' -> walk_grid coordinates { location with direction = rotate location }
-        | _ -> walk_grid (Set.add coordinates (stepped.x, stepped.y)) (step location)
-      with
-      | _ -> Set.add coordinates (stepped.x, stepped.y))
+      let step_char = grid.(next.y).(next.x) in
+      match step_char with
+      | '#' -> walk_grid coordinates { location with direction = rotate location }
+      | _ -> walk_grid (Set.add coordinates (next.x, next.y)) (step location))
   in
-  let visited = Set.empty (module CoordinateSet) in
-  let count = walk_grid (Set.add visited (start.x, start.y)) start in
-  count
+  let visited = [ start.x, start.y ] |> Set.of_list (module CoordinateSet) in
+  Set.length (walk_grid visited start)
 ;;
 
 let solve_part_1 grid start =
-  let result = walk grid start in
-  Printf.printf "Part 1 - %d\n" (Set.length result)
+  let result = occupied_count grid start in
+  Printf.printf "Part 1 - %d\n" result
 ;;
 
 let solve input =
