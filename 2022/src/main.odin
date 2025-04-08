@@ -2,6 +2,7 @@ package main
 
 import "core:fmt"
 import "core:mem"
+import "core:os"
 
 main :: proc() {
     when ODIN_DEBUG {
@@ -26,8 +27,6 @@ main :: proc() {
         }
     }
 
-    part1, part2 := day03()
-    fmt.println("Part 1 -", part1)
-    fmt.println("Part 2 -", part2)
+    day05()
 }
 

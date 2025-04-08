@@ -94,18 +94,18 @@ part2 :: proc(lines : []string) -> int {
     return sum
 }
 
-day03 :: proc() -> (int, int) {
+day03 :: proc() {
     content, ok := os.read_entire_file_from_filename("./inputs/day3.txt")
     defer delete(content)
 
     if !ok {
         fmt.println("Error reading file")
-        return -1, -1
     }
 
     lines := strings.split_lines(strings.trim(string(content), "\n"))
     defer delete(lines)
 
-    return part1(lines), part2(lines)
+    fmt.println("Part 1 -", part1(lines))
+    fmt.println("Part 2 -", part2(lines))
 }
 

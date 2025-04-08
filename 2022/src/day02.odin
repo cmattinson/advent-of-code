@@ -17,13 +17,12 @@ part2 :: proc(opponent_score : int, desired_result : int) -> int {
     return (3 + opponent_score + (desired_result - 1)) % 3
 }
 
-day02 :: proc() -> (int, int) {
+day02 :: proc() {
     content, ok := os.read_entire_file_from_filename("./inputs/day2.txt")
     defer delete(content)
 
     if !ok {
         fmt.println("Error reading file")
-        return -1, -1
     }
 
     lines := strings.split_lines(string(content))
@@ -42,6 +41,7 @@ day02 :: proc() -> (int, int) {
         p2 += part1(part2(them, me), them)
     }
 
-    return p1, p2
+    fmt.println("Part 1 -", p1)
+    fmt.println("Part 2 -", p2)
 }
 
