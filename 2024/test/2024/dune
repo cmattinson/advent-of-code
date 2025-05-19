@@ -1,7 +1,0 @@
-(library
- (inline_tests)
- (name aoc_test)
- (modules Day1_test Day2_test Day3_test)
- (libraries core aoc)
- (preprocess
-  (pps ppx_inline_test ppx_expect)))

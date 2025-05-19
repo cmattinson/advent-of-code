@@ -23,6 +23,15 @@ module CoordinateSet = struct
   include Comparator.Make (T)
 end
 
+module LocationSet = struct
+  module T = struct
+    type t = location [@@deriving compare, sexp]
+  end
+
+  include T
+  include Comparator.Make (T)
+end
+
 let get_location_grid input =
   input
   |> List.to_array
@@ -82,10 +91,60 @@ let occupied_count grid start =
   Set.length (walk_grid visited start)
 ;;
 
+let loop_count grid start =
+  let rec walk_grid coordinates location =
+    let next = step location
+    and height = Array.length grid
+    and width = Array.length grid.(location.y) in
+    if next.y >= height || next.x >= width
+    then coordinates
+    else (
+      let step_char = grid.(next.y).(next.x) in
+      if Set.mem coordinates next
+      then Set.empty (module LocationSet)
+      else (
+        match step_char with
+        | '#' -> walk_grid coordinates { location with direction = rotate location }
+        | _ -> walk_grid (Set.add coordinates next) (step location)))
+  in
+  let visited = [ start ] |> Set.of_list (module LocationSet) in
+  Set.length (walk_grid visited start)
+;;
+
+type char_arr_arr = char array array [@@deriving show]
+
+let check_grid grid start =
+  let rows = Array.length grid in
+  let rec iterate_rows y =
+    if y < rows
+    then (
+      let cols = Array.length grid.(y) in
+      let rec iterate_cols x =
+        if x < cols
+        then (
+          let temp = grid in
+          let char = temp.(y).(x) in
+          temp.(y).(x) <- '#';
+          let () = Printf.printf "Count: %d" (loop_count temp start) in
+          temp.(y).(x) <- char;
+          iterate_cols (x + 1))
+        else iterate_rows (y + 1)
+      in
+      iterate_cols 0)
+    else ()
+  in
+  iterate_rows 0
+;;
+
 let solve_part_1 grid start =
   let result = occupied_count grid start in
   Printf.printf "Part 1 - %d\n" result
 ;;
+
+(* let solve_part_2 grid start = *)
+(*   let result = check_loops in *)
+(*   result *)
+(* ;; *)
 
 let solve input =
   let grid = input |> get_location_grid in
