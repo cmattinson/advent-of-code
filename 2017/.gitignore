@@ -1,0 +1,28 @@
+# Compiled source files
+target/
+
+# Cargo lock file
+Cargo.lock
+
+# Compiled output
+*.rs.bk
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Compiled output (macOS)
+*.DS_Store
+
+# Editor files
+*.vscode/
+*.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Backup files
+*.swp
+*.swo
+
+# Misc
+.env
