@@ -75,17 +75,15 @@ fn part2(input : @string.View) -> Int {
 }
 
 ///|
-fn solve(input : @string.View) -> Unit {
-  println("\nDay 2")
-  println("Part 1: \{part1(input)}")
-  println("Part 2: \{part2(input)}")
+fn solve(input : @string.View) -> (Int, Int) {
+  (part1(input), part2(input))
 }
 
 ///|
-test {
+test "day 2" {
   let contents = @lib.read_file_from_path("inputs/day2.txt")
   match contents {
-    Ok(contents) => solve(contents)
+    Ok(contents) => inspect!(solve(contents), content="(591, 335)")
     Err(e) => println(e)
   }
 }

@@ -39,7 +39,7 @@ fn part2(digits : Array[Int]) -> Int {
 }
 
 ///|
-fn solve(input : @string.View) -> Unit {
+fn solve(input : @string.View) -> (Int, Int) {
   let digits = input
     .split("\n")
     .map(fn(line) {
@@ -50,16 +50,14 @@ fn solve(input : @string.View) -> Unit {
       }
     })
     .to_array()
-  println("\nDay 1")
-  println("Part 1: \{part1(digits)}")
-  println("Part 2: \{part2(digits)}")
+  (part1(digits), part2(digits))
 }
 
 ///|
-test {
+test "day 1" {
   let contents = @lib.read_file_from_path("inputs/day1.txt")
   match contents {
-    Ok(contents) => solve(contents)
+    Ok(contents) => inspect!(solve(contents), content="(259716, 120637440)")
     Err(e) => println(e)
   }
 }
