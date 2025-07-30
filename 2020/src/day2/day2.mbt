@@ -3,16 +3,16 @@ priv struct Policy {
   letter : Char
   min : Int
   max : Int
-} derive(Show)
+}
 
 ///|
 fn parse_policy(
   count : @string.View,
-  letter_view : @string.View
+  letter_view : @string.View,
 ) -> Result[Policy, String] {
   let split = count.split("-").to_array()
-  let min = @strconv.parse_int?(split[0].to_string())
-  let max = @strconv.parse_int?(split[1].to_string())
+  let min = try? @strconv.parse_int(split[0].to_string())
+  let max = try? @strconv.parse_int(split[1].to_string())
   let letter_opt = letter_view[0].to_char()
   match (min, max, letter_opt) {
     (Ok(min), Ok(max), Some(letter)) => Ok(Policy::{ letter, min, max })
@@ -47,7 +47,7 @@ fn is_valid_position(policy : Policy, password : @string.View) -> Bool {
 ///|
 fn count_valid(
   input : @string.View,
-  equality_fn : (Policy, @string.View) -> Bool
+  equality_fn : (Policy, @string.View) -> Bool,
 ) -> Int {
   let lines = input.split("\n")
   let mut valid = 0
@@ -83,7 +83,7 @@ fn solve(input : @string.View) -> (Int, Int) {
 test "day 2" {
   let contents = @lib.read_file_from_path("inputs/day2.txt")
   match contents {
-    Ok(contents) => inspect!(solve(contents), content="(591, 335)")
+    Ok(contents) => inspect(solve(contents), content="(591, 335)")
     Err(e) => println(e)
   }
 }

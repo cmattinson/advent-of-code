@@ -8,11 +8,12 @@ priv struct Passport {
   hair_color : String?
   eye_color : String?
   country_id : Int64?
-} derive(Show)
+}
 
 ///|
 fn parse_int_opt(s : String) -> Int? {
-  match @strconv.parse_int?(s) {
+  let number = try? @strconv.parse_int(s)
+  match number {
     Ok(i) => Some(i)
     Err(_) => None
   }
@@ -20,14 +21,15 @@ fn parse_int_opt(s : String) -> Int? {
 
 ///|
 fn parse_int64_opt(s : String) -> Int64? {
-  match @strconv.parse_int64?(s) {
+  let number = try? @strconv.parse_int64(s)
+  match number {
     Ok(i) => Some(i)
     Err(_) => None
   }
 }
 
 ///|
-fn parse_passport(passport : Array[@string.StringView]) -> Passport {
+fn parse_passport(passport : Array[@string.View]) -> Passport {
   let mut birth_year : Int? = None
   let mut issue_year : Int? = None
   let mut expiration_year : Int? = None
@@ -81,14 +83,14 @@ fn is_valid(passport : Passport) -> Bool {
 }
 
 ///|
-fn part1(passports : Array[Array[@string.StringView]]) -> Int {
+fn part1(passports : Array[Array[@string.View]]) -> Int {
   passports
-  .filter(fn { string_rep => string_rep |> parse_passport |> is_valid })
+  .filter(string_rep => string_rep |> parse_passport |> is_valid)
   .length()
 }
 
 ///|
-fn part2(_passports : Array[Array[@string.StringView]]) -> Int {
+fn part2(_passports : Array[Array[@string.View]]) -> Int {
   0
 }
 
@@ -96,9 +98,7 @@ fn part2(_passports : Array[Array[@string.StringView]]) -> Int {
 fn solve(input : @string.View) -> (Int, Int) {
   let passports = input
     .split("\n\n")
-    .map(fn {
-      line => line.replace_all(old="\n", new=" ").split(" ").to_array()
-    })
+    .map(line => line.replace_all(old="\n", new=" ").split(" ").to_array())
     .to_array()
   (part1(passports), part2(passports))
 }
@@ -107,7 +107,7 @@ fn solve(input : @string.View) -> (Int, Int) {
 test "day 4" {
   let contents = @lib.read_file_from_path("inputs/day4.txt")
   match contents {
-    Ok(contents) => inspect!(solve(contents), content="(210, 0)")
+    Ok(contents) => inspect(solve(contents), content="(210, 0)")
     Err(e) => println(e)
   }
 }

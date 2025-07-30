@@ -1,5 +1,5 @@
 ///|
-fn get_seat_id(str : @string.StringView) -> Int {
+fn get_seat_id(str : @string.View) -> Int {
   let chars = str.to_string().to_array()
   let mut low_row = 0
   let mut high_row = 127
@@ -41,10 +41,10 @@ fn get_seat_id(str : @string.StringView) -> Int {
 
 ///|
 test "get_seat_id" {
-  inspect!(get_seat_id("FBFBBFFRLR"), content="357")
-  inspect!(get_seat_id("BFFFBBFRRR"), content="567")
-  inspect!(get_seat_id("FFFBBBFRRR"), content="119")
-  inspect!(get_seat_id("BBFFBBFRLL"), content="820")
+  inspect(get_seat_id("FBFBBFFRLR"), content="357")
+  inspect(get_seat_id("BFFFBBFRRR"), content="567")
+  inspect(get_seat_id("FFFBBBFRRR"), content="119")
+  inspect(get_seat_id("BBFFBBFRLL"), content="820")
 }
 
 ///|
@@ -78,7 +78,7 @@ fn solve(input : @string.View) -> (Int, Int) {
 test "day 5" {
   let contents = @lib.read_file_from_path("inputs/day5.txt")
   match contents {
-    Ok(contents) => inspect!(solve(contents), content="(970, 587)")
+    Ok(contents) => inspect(solve(contents), content="(970, 587)")
     Err(e) => println(e)
   }
 }

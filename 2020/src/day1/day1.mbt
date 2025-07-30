@@ -43,7 +43,7 @@ fn solve(input : @string.View) -> (Int, Int) {
   let digits = input
     .split("\n")
     .map(fn(line) {
-      let digit = @strconv.parse_int?(line.to_string())
+      let digit = try? @strconv.parse_int(line.to_string())
       match digit {
         Ok(d) => d
         Err(_) => 0
@@ -57,7 +57,7 @@ fn solve(input : @string.View) -> (Int, Int) {
 test "day 1" {
   let contents = @lib.read_file_from_path("inputs/day1.txt")
   match contents {
-    Ok(contents) => inspect!(solve(contents), content="(259716, 120637440)")
+    Ok(contents) => inspect(solve(contents), content="(259716, 120637440)")
     Err(e) => println(e)
   }
 }
