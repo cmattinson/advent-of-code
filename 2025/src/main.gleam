@@ -1,0 +1,37 @@
+import argv
+import days/day1
+import days/day2
+import gleam/io
+import gleam/option.{type Option, None, Some}
+import gleam/string
+import util
+
+fn execute(solver: fn(t) -> #(Int, Int), on: Option(t)) {
+  case on {
+    Some(input) -> {
+      let #(part1, part2) = solver(input)
+      io.println("Part 1: " <> string.inspect(part1))
+      io.println("Part 2: " <> string.inspect(part2))
+    }
+    None -> io.println("Could not read input")
+  }
+}
+
+pub fn main() -> Nil {
+  case argv.load().arguments {
+    [] -> io.println("No arguments provided")
+    ["1"] -> execute(day1.solve, util.read_lines("inputs/day1.txt"))
+    ["2"] -> execute(day2.solve, util.read_file("inputs/day2.txt"))
+    ["3"] -> io.println("Not implemented")
+    ["4"] -> io.println("Not implemented")
+    ["5"] -> io.println("Not implemented")
+    ["6"] -> io.println("Not implemented")
+    ["7"] -> io.println("Not implemented")
+    ["8"] -> io.println("Not implemented")
+    ["9"] -> io.println("Not implemented")
+    ["10"] -> io.println("Not implemented")
+    ["11"] -> io.println("Not implemented")
+    ["12"] -> io.println("Not implemented")
+    _ -> io.println("Invalid arguments")
+  }
+}
