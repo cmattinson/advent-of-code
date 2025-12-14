@@ -1,4 +1,4 @@
-import days/day3
+import days/day4
 import gleam/option.{None, Some}
 import gleeunit
 import gleeunit/should
@@ -9,9 +9,9 @@ pub fn main() {
 }
 
 pub fn solve_test() {
-  case util.read_lines("inputs/day3-example.txt") {
+  case util.read_file("inputs/day4-example.txt") {
     Some(input) -> {
-      should.equal(day3.solve(input), #(357, 3_121_910_778_619))
+      should.equal(day4.solve(input), #(13, 43))
     }
     None -> should.be_true(False)
   }
