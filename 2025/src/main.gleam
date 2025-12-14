@@ -1,6 +1,7 @@
 import argv
 import days/day1
 import days/day2
+import days/day3
 import gleam/io
 import gleam/option.{type Option, None, Some}
 import gleam/string
@@ -22,7 +23,7 @@ pub fn main() -> Nil {
     [] -> io.println("No arguments provided")
     ["1"] -> execute(day1.solve, util.read_lines("inputs/day1.txt"))
     ["2"] -> execute(day2.solve, util.read_file("inputs/day2.txt"))
-    ["3"] -> io.println("Not implemented")
+    ["3"] -> execute(day3.solve, util.read_lines("inputs/day3.txt"))
     ["4"] -> io.println("Not implemented")
     ["5"] -> io.println("Not implemented")
     ["6"] -> io.println("Not implemented")
