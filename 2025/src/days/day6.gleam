@@ -13,51 +13,53 @@ pub type Equation {
 }
 
 fn parse_equation(lst: List(String)) -> Equation {
-  list.fold(lst, Equation(None, []), fn(acc, str) {
-    case str {
-      "+" -> Equation(Some(Add), acc.digits |> list.reverse)
-      "*" -> Equation(Some(Multiply), acc.digits |> list.reverse)
-      _ -> {
-        let chars = string.to_graphemes(str)
-        case chars {
-          [] -> Equation(acc.operation, acc.digits)
-          _ -> {
-            let last_char = list.last(chars)
-            let first_chars = list.take(chars, list.length(chars) - 1)
-            case last_char {
-              Ok(op) if op == "*" || op == "+" -> {
-                let num_str = string.join(first_chars, "")
-                case int.parse(num_str) {
-                  Ok(num) -> {
-                    let operation = case op {
-                      "+" -> Some(Add)
-                      "*" -> Some(Multiply)
-                      _ -> acc.operation
+  let reversed_digits =
+    list.fold(lst, #(None, []), fn(acc, str) {
+      case str {
+        "+" -> #(Some(Add), acc.1)
+        "*" -> #(Some(Multiply), acc.1)
+        _ -> {
+          let chars = string.to_graphemes(str)
+          case chars {
+            [] -> acc
+            _ -> {
+              let last_char = list.last(chars)
+              case last_char {
+                Ok(op) if op == "*" || op == "+" -> {
+                  let first_chars = list.take(chars, list.length(chars) - 1)
+                  let num_str = string.join(first_chars, "")
+                  case int.parse(num_str) {
+                    Ok(num) -> {
+                      let operation = case op {
+                        "+" -> Some(Add)
+                        "*" -> Some(Multiply)
+                        _ -> acc.0
+                      }
+                      #(operation, [num, ..acc.1])
                     }
-                    Equation(operation, [num, ..acc.digits])
+                    Error(_) -> acc
                   }
-                  Error(_) -> Equation(acc.operation, acc.digits)
                 }
-              }
-              _ -> {
-                case int.parse(str) {
-                  Ok(digit) -> Equation(acc.operation, [digit, ..acc.digits])
-                  Error(_) -> Equation(acc.operation, acc.digits)
+                _ -> {
+                  case int.parse(str) {
+                    Ok(digit) -> #(acc.0, [digit, ..acc.1])
+                    Error(_) -> acc
+                  }
                 }
               }
             }
           }
         }
       }
-    }
-  })
+    })
+
+  Equation(reversed_digits.0, list.reverse(reversed_digits.1))
 }
 
 pub fn parse_input_horizontal(input: List(String)) -> List(Equation) {
   input
-  |> list.map(fn(str) {
-    string.split(str, " ") |> list.filter(fn(s) { s != "" })
-  })
+  |> list.map(string.split(_, " "))
+  |> list.map(list.filter(_, fn(s) { !string.is_empty(s) }))
   |> list.transpose
   |> list.map(parse_equation)
 }
@@ -73,12 +75,8 @@ fn split_list(
   let result =
     list.fold(lst, SplitAccum([], []), fn(acc, item) {
       case item == separator {
-        True -> {
-          SplitAccum([list.reverse(acc.current), ..acc.chunks], [])
-        }
-        False -> {
-          SplitAccum(acc.chunks, [string.join(item, ""), ..acc.current])
-        }
+        True -> SplitAccum([list.reverse(acc.current), ..acc.chunks], [])
+        False -> SplitAccum(acc.chunks, [string.join(item, ""), ..acc.current])
       }
     })
 
@@ -89,22 +87,17 @@ pub fn parse_input_vertical(input: List(String)) -> List(Equation) {
   input
   |> list.map(string.to_graphemes)
   |> list.transpose
-  |> list.map(fn(lst) { list.filter(lst, fn(s) { s != " " }) })
+  |> list.map(list.filter(_, fn(s) { s != " " }))
   |> split_list([])
   |> list.map(parse_equation)
 }
 
 fn process_equation(equation: Equation) -> Int {
   case equation.operation {
-    None -> {
-      panic as "Invalid equation found"
-    }
-    Some(Add) ->
-      equation.digits
-      |> list.fold(0, fn(acc, digit) { acc + digit })
+    None -> panic as "Invalid equation found"
+    Some(Add) -> list.fold(equation.digits, 0, fn(acc, digit) { acc + digit })
     Some(Multiply) ->
-      equation.digits
-      |> list.fold(1, fn(acc, digit) { acc * digit })
+      list.fold(equation.digits, 1, fn(acc, digit) { acc * digit })
   }
 }
 

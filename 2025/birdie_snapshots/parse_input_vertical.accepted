@@ -1,7 +1,5 @@
 ---
 version: 1.5.2
 title: parse_input_vertical
-file: ./test/day6_test.gleam
-test_name: parse_input_vertical_test
 ---
-[Equation(Some(Multiply), [356, 24, 1]), Equation(Some(Add), [8, 248, 369]), Equation(Some(Multiply), [175, 581, 32]), Equation(Some(Add), [4, 431, 623])]
+[Equation(Some(Multiply), [1, 24, 356]), Equation(Some(Add), [369, 248, 8]), Equation(Some(Multiply), [32, 581, 175]), Equation(Some(Add), [623, 431, 4])]
