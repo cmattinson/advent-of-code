@@ -1,0 +1,7 @@
+---
+version: 1.5.2
+title: parse_input_horizontal
+file: ./test/day6_test.gleam
+test_name: parse_input_horizontal_test
+---
+[Equation(Some(Multiply), [123, 45, 6]), Equation(Some(Add), [328, 64, 98]), Equation(Some(Multiply), [51, 387, 215]), Equation(Some(Add), [64, 23, 314])]
