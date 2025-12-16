@@ -1,7 +1,6 @@
 import gleam/int
 import gleam/list
 import gleam/result
-
 import gleam/string
 
 type Range {

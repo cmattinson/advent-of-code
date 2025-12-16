@@ -12,19 +12,41 @@ pub type Equation {
   Equation(operation: Option(Operation), digits: List(Int))
 }
 
-type EquationAccum {
-  EquationAccum(equations: List(List(String)), current_equation: List(String))
-}
-
 fn parse_equation(lst: List(String)) -> Equation {
   list.fold(lst, Equation(None, []), fn(acc, str) {
     case str {
       "+" -> Equation(Some(Add), acc.digits |> list.reverse)
       "*" -> Equation(Some(Multiply), acc.digits |> list.reverse)
       _ -> {
-        case int.parse(str) {
-          Ok(digit) -> Equation(acc.operation, [digit, ..acc.digits])
-          Error(_) -> Equation(acc.operation, acc.digits)
+        let chars = string.to_graphemes(str)
+        case chars {
+          [] -> Equation(acc.operation, acc.digits)
+          _ -> {
+            let last_char = list.last(chars)
+            let first_chars = list.take(chars, list.length(chars) - 1)
+            case last_char {
+              Ok(op) if op == "*" || op == "+" -> {
+                let num_str = string.join(first_chars, "")
+                case int.parse(num_str) {
+                  Ok(num) -> {
+                    let operation = case op {
+                      "+" -> Some(Add)
+                      "*" -> Some(Multiply)
+                      _ -> acc.operation
+                    }
+                    Equation(operation, [num, ..acc.digits])
+                  }
+                  Error(_) -> Equation(acc.operation, acc.digits)
+                }
+              }
+              _ -> {
+                case int.parse(str) {
+                  Ok(digit) -> Equation(acc.operation, [digit, ..acc.digits])
+                  Error(_) -> Equation(acc.operation, acc.digits)
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -40,48 +62,35 @@ pub fn parse_input_horizontal(input: List(String)) -> List(Equation) {
   |> list.map(parse_equation)
 }
 
-pub fn parse_input_vertical(input: List(String)) -> List(Equation) {
-  let equations =
-    input
-    |> list.map(string.to_graphemes)
-    |> list.transpose
-    |> list.reverse
-    |> list.map(fn(lst) { list.filter(lst, fn(s) { s != " " }) })
-    |> list.fold(EquationAccum([], []), fn(acc, col) {
-      case col {
-        [] -> {
-          EquationAccum([acc.current_equation, ..acc.equations], [])
-        }
-        _ -> {
-          let current_equation =
-            list.fold(col, #("", ""), fn(acc, s) {
-              case s {
-                "+" -> #(acc.0, "+")
-                "*" -> #(acc.0, "*")
-                _ -> #(acc.0 <> s, acc.1)
-              }
-            })
+type SplitAccum {
+  SplitAccum(chunks: List(List(String)), current: List(String))
+}
 
-          case current_equation.1 {
-            "" -> {
-              EquationAccum(acc.equations, [
-                current_equation.0,
-                ..acc.current_equation
-              ])
-            }
-            _ -> {
-              EquationAccum(acc.equations, [
-                current_equation.0,
-                current_equation.1,
-                ..acc.current_equation
-              ])
-            }
-          }
+fn split_list(
+  lst: List(List(String)),
+  separator: List(String),
+) -> List(List(String)) {
+  let result =
+    list.fold(lst, SplitAccum([], []), fn(acc, item) {
+      case item == separator {
+        True -> {
+          SplitAccum([list.reverse(acc.current), ..acc.chunks], [])
+        }
+        False -> {
+          SplitAccum(acc.chunks, [string.join(item, ""), ..acc.current])
         }
       }
     })
 
-  list.prepend(equations.equations, equations.current_equation)
+  list.reverse([list.reverse(result.current), ..result.chunks])
+}
+
+pub fn parse_input_vertical(input: List(String)) -> List(Equation) {
+  input
+  |> list.map(string.to_graphemes)
+  |> list.transpose
+  |> list.map(fn(lst) { list.filter(lst, fn(s) { s != " " }) })
+  |> split_list([])
   |> list.map(parse_equation)
 }
 
