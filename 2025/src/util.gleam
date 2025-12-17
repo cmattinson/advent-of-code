@@ -1,24 +1,17 @@
-import gleam/option.{type Option, None, Some}
 import gleam/string
 import simplifile
 
-pub fn read_file(file: String) -> Option(String) {
-  case simplifile.read(file) {
-    Ok(file) -> Some(string.trim(file))
-    Error(_) -> None
-  }
+pub fn read_file(file: String) -> String {
+  let assert Ok(file) = simplifile.read(file)
+  string.trim(file)
 }
 
-pub fn read_lines_untrimmed(file: String) -> Option(List(String)) {
-  case simplifile.read(file) {
-    Ok(file) -> Some(string.split(file, "\n"))
-    Error(_) -> None
-  }
+pub fn read_lines(file: String) -> List(String) {
+  let assert Ok(file) = simplifile.read(file)
+  string.split(string.trim(file), "\n")
 }
 
-pub fn read_lines(file: String) -> Option(List(String)) {
-  case simplifile.read(file) {
-    Ok(file) -> Some(string.split(string.trim(file), "\n"))
-    Error(_) -> None
-  }
+pub fn read_lines_raw(file: String) -> List(String) {
+  let assert Ok(file) = simplifile.read(file)
+  string.split(file, "\n")
 }

@@ -1,4 +1,4 @@
-import days/day1
+import days/day7
 
 import gleeunit
 import gleeunit/should
@@ -9,7 +9,7 @@ pub fn main() {
 }
 
 pub fn solve_test() {
-  util.read_lines("inputs/day1-example.txt")
-  |> day1.solve
-  |> should.equal(#(3, 6))
+  util.read_file("inputs/day7-example.txt")
+  |> day7.solve
+  |> should.equal(#(21, 40))
 }

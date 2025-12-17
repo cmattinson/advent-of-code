@@ -65,35 +65,27 @@ fn tick(dial: Int, ticks: Int, zeros: Int, direction: Direction) -> #(Int, Int) 
 }
 
 fn part1(accum: Accum, line: String) -> Accum {
-  case parse_line(line) {
-    Ok(value) -> {
-      let next_value = get_next_value(accum.dial, value)
-      case next_value {
-        0 -> Accum(dial: next_value, at_zero: accum.at_zero + 1)
-        _ -> Accum(dial: next_value, at_zero: accum.at_zero)
-      }
-    }
-    Error(reason) -> panic as reason
+  let assert Ok(value) = parse_line(line)
+  let next_value = get_next_value(accum.dial, value)
+  case next_value {
+    0 -> Accum(dial: next_value, at_zero: accum.at_zero + 1)
+    _ -> Accum(dial: next_value, at_zero: accum.at_zero)
   }
 }
 
 fn part2(accum: Accum, line: String) -> Accum {
-  case parse_line(line) {
-    Ok(value) -> {
-      case value > 0 {
-        True -> {
-          let #(final_dial, zero_count) =
-            tick(accum.dial, int.absolute_value(value), 0, Right)
-          Accum(dial: final_dial, at_zero: accum.at_zero + zero_count)
-        }
-        False -> {
-          let #(final_dial, zero_count) =
-            tick(accum.dial, int.absolute_value(value), 0, Left)
-          Accum(dial: final_dial, at_zero: accum.at_zero + zero_count)
-        }
-      }
+  let assert Ok(value) = parse_line(line)
+  case value > 0 {
+    True -> {
+      let #(final_dial, zero_count) =
+        tick(accum.dial, int.absolute_value(value), 0, Right)
+      Accum(dial: final_dial, at_zero: accum.at_zero + zero_count)
     }
-    Error(reason) -> panic as reason
+    False -> {
+      let #(final_dial, zero_count) =
+        tick(accum.dial, int.absolute_value(value), 0, Left)
+      Accum(dial: final_dial, at_zero: accum.at_zero + zero_count)
+    }
   }
 }
 

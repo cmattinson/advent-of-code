@@ -1,5 +1,5 @@
 import days/day2
-import gleam/option.{None, Some}
+
 import gleeunit
 import gleeunit/should
 import util
@@ -9,12 +9,9 @@ pub fn main() {
 }
 
 pub fn solve_test() {
-  case util.read_file("inputs/day2-example.txt") {
-    Some(input) -> {
-      should.equal(day2.solve(input), #(1_227_775_554, 4_174_379_265))
-    }
-    None -> should.be_true(False)
-  }
+  util.read_file("inputs/day2-example.txt")
+  |> day2.solve
+  |> should.equal(#(1_227_775_554, 4_174_379_265))
 }
 
 pub fn sequence_repeats_test() {
