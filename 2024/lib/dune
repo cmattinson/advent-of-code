@@ -1,5 +1,5 @@
 (library
  (name aoc)
- (modules Day1 Day2 Day3 Day4 Day5 Day6 Day7 Day8)
+ (modules Day1 Day2 Day3 Day4 Day5 Day6 Day7 Day8 Day9)
  (libraries core re alcotest)
  (preprocess (pps ppx_deriving.show ppx_jane)))

@@ -3,7 +3,7 @@
     "character_width": 120,
     "tabs": false,
     "tabs_width": 4,
-    "ident_cases": true,
+    "indent_cases": true,
     "spaces_around_colons": true,
     "newline_limit": 1
 }

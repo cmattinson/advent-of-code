@@ -1,91 +1,28 @@
 ///|
-priv struct Passport {
-  passport_id : Int64?
-  birth_year : Int?
-  issue_year : Int?
-  expiration_year : Int?
-  height : String?
-  hair_color : String?
-  eye_color : String?
-  country_id : Int64?
-}
-
-///|
-fn parse_int_opt(s : String) -> Int? {
-  let number = try? @strconv.parse_int(s)
-  match number {
-    Ok(i) => Some(i)
-    Err(_) => None
-  }
-}
-
-///|
-fn parse_int64_opt(s : String) -> Int64? {
-  let number = try? @strconv.parse_int64(s)
-  match number {
-    Ok(i) => Some(i)
-    Err(_) => None
-  }
-}
-
-///|
-fn parse_passport(passport : Array[@string.View]) -> Passport {
-  let mut birth_year : Int? = None
-  let mut issue_year : Int? = None
-  let mut expiration_year : Int? = None
-  let mut height : String? = None
-  let mut hair_color : String? = None
-  let mut eye_color : String? = None
-  let mut passport_id : Int64? = None
-  let mut country_id : Int64? = None
-  for field in passport {
-    let split = field.split(":").to_array()
-    match split[0] {
-      "byr" => birth_year = parse_int_opt(split[1].to_string())
-      "iyr" => issue_year = parse_int_opt(split[1].to_string())
-      "eyr" => expiration_year = parse_int_opt(split[1].to_string())
-      "hgt" => height = Some(split[1].to_string())
-      "hcl" => hair_color = Some(split[1].to_string())
-      "ecl" => eye_color = Some(split[1].to_string())
-      "pid" => passport_id = parse_int64_opt(split[1].to_string())
-      "cid" => country_id = parse_int64_opt(split[1].to_string())
-      _ => ()
+fn[T : Eq] every(array : Array[T], values : Array[T]) -> Bool {
+  for field in values {
+    if array.contains(field) {
+      continue
     }
+    return false
   }
-  Passport::{
-    birth_year,
-    issue_year,
-    expiration_year,
-    height,
-    hair_color,
-    eye_color,
-    passport_id,
-    country_id,
-  }
-}
-
-///|
-fn is_valid(passport : Passport) -> Bool {
-  match passport {
-    {
-      passport_id: Some(_),
-      birth_year: Some(_),
-      issue_year: Some(_),
-      expiration_year: Some(_),
-      height: Some(_),
-      hair_color: Some(_),
-      eye_color: Some(_),
-      country_id: Some(_)
-      | None,
-    } => true
-    _ => false
-  }
+  return true
 }
 
 ///|
 fn part1(passports : Array[Array[@string.View]]) -> Int {
   passports
-  .filter(string_rep => string_rep |> parse_passport |> is_valid)
+  .filter(passport => {
+    let present : Set[String] = Set::new()
+    let fields : Array[String] = [
+      "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid",
+    ]
+    for entry in passport {
+      guard entry.split(":").to_array() is [field, _value] else { panic() }
+      present.add(field.to_string())
+    }
+    return every(fields, present.to_array())
+  })
   .length()
 }
 
@@ -104,10 +41,19 @@ fn solve(input : @string.View) -> (Int, Int) {
 }
 
 ///|
+test "day 4 example" {
+  let contents = @lib.read_file_from_path("inputs/day4-example.txt")
+  match contents {
+    Ok(contents) => inspect(solve(contents), content="(2, 0)")
+    Err(e) => println(e)
+  }
+}
+
+///|
 test "day 4" {
   let contents = @lib.read_file_from_path("inputs/day4.txt")
   match contents {
-    Ok(contents) => inspect(solve(contents), content="(210, 0)")
+    Ok(contents) => inspect(solve(contents), content="(133, 0)")
     Err(e) => println(e)
   }
 }

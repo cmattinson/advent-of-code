@@ -1,0 +1,21 @@
+package:
+  name: "2019"
+  dependencies:
+    - console
+    - effect
+    - foldable-traversable
+    - integers
+    - lists
+    - ordered-collections
+    - prelude
+    - spec
+    - spec-node
+    - strings
+  test:
+    main: Test.Main
+    dependencies:
+      - spec-node
+workspace:
+  packageSet:
+    registry: 77.4.0
+  extraPackages: {}

@@ -9,10 +9,8 @@ get_priority :: proc(letter : rune) -> int {
     return int_rep >= 97 ? int_rep - 96 : int_rep - 38
 }
 
-create_letter_set :: proc(str : string) -> map[rune]struct {
-    } {
-    set := make(map[rune]struct {
-        })
+create_letter_set :: proc(str : string) -> map[rune]struct{} {
+    set := make(map[rune]struct{})
 
     for r in str {
         set[r] = {}
@@ -108,4 +106,3 @@ day03 :: proc() {
     fmt.println("Part 1 -", part1(lines))
     fmt.println("Part 2 -", part2(lines))
 }
-

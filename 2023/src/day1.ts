@@ -1,52 +1,38 @@
-const file = Bun.file("inputs/day1.txt");
-const text = await file.text();
+const digitStrings = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
-const numbers = {
-	one: "1",
-	two: "2",
-	three: "3",
-	four: "4",
-	five: "5",
-	six: "6",
-	seven: "7",
-	eight: "8",
-	nine: "9",
-};
+function getDigits(group: string[]): number {
+    const digits = group.filter((char: string) => {
+        return !Number.isNaN(Number.parseInt(char));
+    });
 
-function getDigits(line: string): number {
-	const digits = line
-		.split("")
-		.filter((character) => Number.parseInt(character));
-	return Number.parseInt(`${digits[0]}${digits[digits.length - 1]}`);
+    return Number.parseInt(`${digits[0]}${digits[digits.length - 1]}`);
 }
 
-function part1(input: string[]): number {
-	return input
-		.map((line) => getDigits(line))
-		.reduce((accum, num) => (accum += num), 0);
+export function part1(lines: string[]): number {
+    return lines.map((line) => getDigits(line.split(""))).reduce((accum, num) => accum + num, 0);
 }
 
-function part2(input: string[]): number {
-	return input
-		.map((line) => {
-			const replaced = line.split("").reduce((accum, char) => {
-				let accumWithNext = accum + char;
-				for (const [key, value] of Object.entries(numbers)) {
-					if (accumWithNext.includes(key)) {
-						return accumWithNext.replace(key, value);
-					}
-				}
+export function part2(lines: string[]): number {
+    return lines
+        .map((line) => {
+            const digits: number[] = [];
+            for (const [index, char] of line.split("").entries()) {
+                if (!Number.isNaN(Number.parseInt(char))) {
+                    digits.push(Number.parseInt(char));
+                } else {
+                    for (const [digitIndex, digit] of digitStrings.entries()) {
+                        if (line.startsWith(digit, index)) {
+                            digits.push(digitIndex + 1);
+                        }
+                    }
+                }
+            }
 
-				return accumWithNext;
-			}, "");
-
-			console.log(line, "->", replaced, "->", getDigits(replaced));
-
-			return getDigits(replaced);
-		})
-		.reduce((accum, num) => (accum += num), 0);
+            return Number.parseInt(`${digits[0]}${digits[digits.length - 1]}`);
+        })
+        .reduce((accum, num) => accum + num, 0);
 }
 
-let lines = text.trim().split("\n");
-console.log("Part 1 -", part1(lines));
-console.log("Part 2 -", part2(lines));
+export function solve(lines: string[]): [number, number] {
+    return [part1(lines), part2(lines)];
+}

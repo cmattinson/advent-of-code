@@ -26,6 +26,7 @@ let command =
        | "6" -> Day6.solve (read_lines input)
        | "7" -> Day7.solve (read_lines input)
        | "8" -> Day8.solve (read_file input)
+       | "9" -> Day9.solve (read_file input)
        | _ -> Stdio.print_endline "Day not solved")
 ;;
 

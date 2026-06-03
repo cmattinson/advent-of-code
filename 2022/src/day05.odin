@@ -51,14 +51,22 @@ parse_instructions :: proc(lines : []string, allocator := context.allocator) -> 
     return instructions
 }
 
-process_instruction :: proc(stacks : ^map[int][dynamic]rune, instruction : Instruction) {
+process_instruction :: proc(
+    stacks : ^map[int][dynamic]rune,
+    instruction : Instruction,
+    allocator := context.allocator,
+) {
     for _ in 0 ..< instruction.count {
         candidate := pop(&stacks[instruction.from])
         append(&stacks[instruction.to], candidate)
     }
 }
 
-process_instruction_move_multiple :: proc(stacks : ^map[int][dynamic]rune, instruction : Instruction) {
+process_instruction_move_multiple :: proc(
+    stacks : ^map[int][dynamic]rune,
+    instruction : Instruction,
+    allocator := context.allocator,
+) {
     chunk := make([]rune, instruction.count)
     defer delete(chunk)
 
@@ -71,7 +79,11 @@ process_instruction_move_multiple :: proc(stacks : ^map[int][dynamic]rune, instr
 }
 
 @(private = "file")
-part1 :: proc(stacks_string : []string, instructions : [dynamic]Instruction) -> []rune {
+part1 :: proc(
+    stacks_string : []string,
+    instructions : [dynamic]Instruction,
+    allocator := context.allocator,
+) -> []rune {
     stacks := construct_stacks(stacks_string)
     defer delete(stacks)
 
@@ -79,7 +91,7 @@ part1 :: proc(stacks_string : []string, instructions : [dynamic]Instruction) -> 
         process_instruction(&stacks, instruction)
     }
 
-    message := make([]rune, len(stacks))
+    message := make_slice([]rune, len(stacks), allocator)
 
     for i in 1 ..= len(stacks) {
         message[i - 1] = stacks[i][len(stacks[i]) - 1]
@@ -90,7 +102,11 @@ part1 :: proc(stacks_string : []string, instructions : [dynamic]Instruction) -> 
 }
 
 @(private = "file")
-part2 :: proc(stacks_string : []string, instructions : [dynamic]Instruction) -> []rune {
+part2 :: proc(
+    stacks_string : []string,
+    instructions : [dynamic]Instruction,
+    allocator := context.allocator,
+) -> []rune {
     stacks := construct_stacks(stacks_string)
     defer delete(stacks)
 
@@ -98,7 +114,7 @@ part2 :: proc(stacks_string : []string, instructions : [dynamic]Instruction) -> 
         process_instruction_move_multiple(&stacks, instruction)
     }
 
-    message := make([]rune, len(stacks))
+    message := make([]rune, len(stacks), allocator)
 
     for i in 1 ..= len(stacks) {
         message[i - 1] = stacks[i][len(stacks[i]) - 1]
@@ -118,9 +134,9 @@ day05 :: proc() {
 
     entire_content := strings.trim(string(content), "\n")
     split := strings.split(entire_content, "\n\n")
+    defer delete(split)
     stack_string := split[0]
     instructions_string := split[1]
-    defer delete(split)
 
     grid := strings.split_lines(stack_string)
     defer delete(grid)

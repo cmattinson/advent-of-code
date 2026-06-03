@@ -44,4 +44,3 @@ day02 :: proc() {
     fmt.println("Part 1 -", p1)
     fmt.println("Part 2 -", p2)
 }
-

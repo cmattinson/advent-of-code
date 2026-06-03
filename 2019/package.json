@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "day1": "npx spago run --main Day01",
+    "day2": "npx spago run --main Day02",
+    "day3": "npx spago run --main Day03",
+    "day4": "npx spago run --main Day04",
+    "day5": "npx spago run --main Day05",
+    "day6": "npx spago run --main Day06",
+    "day7": "npx spago run --main Day07",
+    "day8": "npx spago run --main Day08",
+    "day9": "npx spago run --main Day09",
+    "day10": "npx spago run --main Day10",
+    "day11": "npx spago run --main Day11",
+    "day12": "npx spago run --main Day12",
+    "day13": "npx spago run --main Day13",
+    "day14": "npx spago run --main Day14",
+    "day15": "npx spago run --main Day15",
+    "day16": "npx spago run --main Day16",
+    "day17": "npx spago run --main Day17",
+    "day18": "npx spago run --main Day18",
+    "day19": "npx spago run --main Day19",
+    "day20": "npx spago run --main Day20",
+    "day21": "npx spago run --main Day21",
+    "day22": "npx spago run --main Day22",
+    "day23": "npx spago run --main Day23",
+    "day24": "npx spago run --main Day24",
+    "day25": "npx spago run --main Day25"
+  }
+}

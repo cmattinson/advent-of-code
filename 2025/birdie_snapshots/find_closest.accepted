@@ -1,0 +1,7 @@
+---
+version: 1.5.2
+title: find_closest
+file: ./test/day8_test.gleam
+test_name: find_closest_test
+---
+JunctionBox(425, 690, 689)

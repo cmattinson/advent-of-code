@@ -93,4 +93,3 @@ day01 :: proc() {
     fmt.println("Part 1 -", part1(split))
     fmt.println("Part 2 -", part2(split))
 }
-
