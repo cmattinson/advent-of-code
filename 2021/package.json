@@ -1,0 +1,19 @@
+{
+	"name": "2021",
+	"private": true,
+	"scripts": {
+		"build": "rescript",
+		"clean": "rescript clean",
+		"start": "rescript watch",
+		"test": "vitest run --watch",
+		"promote": "vitest run --update"
+	},
+	"dependencies": {
+		"rescript": "^12.3.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.16",
+		"@types/node": "^25.9.2",
+		"vitest": "^4.1.8"
+	}
+}
