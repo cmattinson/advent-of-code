@@ -1,3 +1,4 @@
+open Common
 type accum = {previous: option<int>, increasing: int, decreasing: int}
 
 let iter = nums => {
@@ -40,5 +41,5 @@ let solve = nums => {
   let nums = nums->Array.map(Int.fromString)
   let part1 = iter(nums)
   let part2 = iter(nums->windowSums->Array.map(x => Some(x)))
-  `Part 1 - ${Int.toString(part1)}\nPart 2 - ${Int.toString(part2)}`
+  {part1, part2}
 }
