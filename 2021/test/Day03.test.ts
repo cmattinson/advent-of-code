@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { readLines } from "../src/Common.bs.js";
-import { solve, getBitCounts, getRatings } from "../src/Day3.bs.js";
+import { solve, getBitCounts, getRatings } from "../src/Day03.bs.js";
 
 describe("Day 3", () => {
 	test("getBitCounts", () => {
-		const input = readLines("test/inputs/day3-example.txt");
+		const input = readLines("test/inputs/day03-example.txt");
 		expect(getBitCounts(input)).toMatchInlineSnapshot(`
 			[
 			  {
@@ -32,7 +32,7 @@ describe("Day 3", () => {
 	});
 
 	test("getRatings", () => {
-		const input = readLines("test/inputs/day3-example.txt");
+		const input = readLines("test/inputs/day03-example.txt");
 		expect(getRatings(input)).toMatchInlineSnapshot(`
 			{
 			  "co2": [
@@ -46,7 +46,7 @@ describe("Day 3", () => {
 	});
 
 	test("example", () => {
-		const input = readLines("test/inputs/day3-example.txt");
+		const input = readLines("test/inputs/day03-example.txt");
 		expect(solve(input)).toMatchInlineSnapshot(`
 			{
 			  "part1": 198,
@@ -56,7 +56,7 @@ describe("Day 3", () => {
 	});
 
 	test("full", () => {
-		const input = readLines("test/inputs/day3.txt");
+		const input = readLines("test/inputs/day03.txt");
 		expect(solve(input)).toMatchInlineSnapshot(`
 			{
 			  "part1": 3009600,

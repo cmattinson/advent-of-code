@@ -1,24 +1,24 @@
 import { describe, expect, test } from "vitest";
 import { readLines } from "../src/Common.bs.js";
-import { solve } from "../src/Day5.bs.js";
+import { solve } from "../src/Day01.bs.js";
 
-describe("Day 5", () => {
+describe("Day 1", () => {
 	test("example", () => {
-		const input = readLines("test/inputs/day5-example.txt");
+		const input = readLines("test/inputs/day01-example.txt");
 		expect(solve(input)).toMatchInlineSnapshot(`
 			{
-			  "part1": 5,
-			  "part2": 12,
+			  "part1": 7,
+			  "part2": 5,
 			}
 		`);
 	});
 
 	test("full", () => {
-		const input = readLines("test/inputs/day5.txt");
+		const input = readLines("test/inputs/day01.txt");
 		expect(solve(input)).toMatchInlineSnapshot(`
 			{
-			  "part1": 6283,
-			  "part2": 18864,
+			  "part1": 1553,
+			  "part2": 1597,
 			}
 		`);
 	});

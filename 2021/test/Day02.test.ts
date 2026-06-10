@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { readLines } from "../src/Common.bs.js";
-import { solve } from "../src/Day2.bs.js";
+import { solve } from "../src/Day02.bs.js";
 
 describe("Day 2", () => {
 	test("example", () => {
-		const input = readLines("test/inputs/day2-example.txt");
+		const input = readLines("test/inputs/day02-example.txt");
 		expect(solve(input)).toMatchInlineSnapshot(`
 			{
 			  "part1": 150,
@@ -14,7 +14,7 @@ describe("Day 2", () => {
 	});
 
 	test("full", () => {
-		const input = readLines("test/inputs/day2.txt");
+		const input = readLines("test/inputs/day02.txt");
 		expect(solve(input)).toMatchInlineSnapshot(`
 			{
 			  "part1": 1989265,
