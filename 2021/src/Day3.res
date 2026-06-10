@@ -4,8 +4,6 @@ type rates = {gamma: string, epsilon: string}
 type bitCount = {zeroes: int, ones: int}
 type oxygenAndCO2 = {oxygen: array<string>, co2: array<string>}
 
-@val external parseInt: (string, int) => int = "parseInt"
-
 let getBitCounts = lines => {
   let length = switch lines[0] {
   | Some(line) => line->String.length
@@ -101,12 +99,12 @@ let getRatings = bitArray => {
 }
 
 let part1 = rates => {
-  parseInt(rates.gamma, 2) * parseInt(rates.epsilon, 2)
+  rates.gamma->parseIntWithRadix(2) * rates.epsilon->parseIntWithRadix(2)
 }
 
 let part2 = ratings => {
   switch (ratings.oxygen, ratings.co2) {
-  | ([ox], [co]) => parseInt(ox, 2) * parseInt(co, 2)
+  | ([ox], [co]) => ox->parseIntWithRadix(2) * co->parseIntWithRadix(2)
   | _ => failwith("Invalid ratings")
   }
 }

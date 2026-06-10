@@ -6,6 +6,15 @@ let readInput = (path: string): string => readFileSync(path, "utf-8")->String.tr
 
 let readLines = (path: string): array<string> => Js.String.split("\n", readInput(path))
 
+let parseInt = str => {
+  switch str->Int.fromString {
+  | Some(n) => n
+  | None => failwith(`Failed to parse int: ${str}`)
+  }
+}
+
+@val external parseIntWithRadix: (string, int) => int = "parseInt"
+
 // Used for Maps where the key is an int
 module IntCmp = Belt.Id.MakeComparable({
   type t = int
