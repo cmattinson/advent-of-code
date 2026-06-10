@@ -33,44 +33,38 @@ let getBitCounts = lines => {
   }
 }
 
-let getRates = bitCounts => {
+let getRates = bitCounts =>
   bitCounts->Array.reduce({gamma: "", epsilon: ""}, (acc, bitCount) => {
-    {
-      gamma: acc.gamma ++ (bitCount.zeroes > bitCount.ones ? "0" : "1"),
-      epsilon: acc.epsilon ++ (bitCount.zeroes < bitCount.ones ? "0" : "1"),
-    }
+    gamma: acc.gamma ++ (bitCount.zeroes > bitCount.ones ? "0" : "1"),
+    epsilon: acc.epsilon ++ (bitCount.zeroes < bitCount.ones ? "0" : "1"),
   })
-}
 
-let getMostCommon = (bitCounts, position) => {
+let getMostCommon = (bitCounts, position) =>
   switch bitCounts[position] {
   | Some({zeroes, ones}) if zeroes > ones => Some("0")
   | Some({zeroes, ones}) if zeroes < ones => Some("1")
   | Some(_) => Some("1")
   | None => None
   }
-}
 
-let getLeastCommon = (bitCounts, position) => {
+let getLeastCommon = (bitCounts, position) =>
   switch bitCounts[position] {
   | Some({zeroes, ones}) if zeroes > ones => Some("1")
   | Some({zeroes, ones}) if zeroes < ones => Some("0")
   | Some(_) => Some("0")
   | None => None
   }
-}
 
 let getRatings = bitArray => {
-  let filter = (bits, position, desired) => {
-    bits->Array.keep(bit => {
+  let filter = (bits, position, desired) =>
+    bits->Array.keep(bit =>
       switch String.get(bit, position) {
       | Some(ch) => ch == desired
       | _ => false
       }
-    })
-  }
+    )
 
-  let rec loop = (oxygen, co2, position) => {
+  let rec loop = (oxygen, co2, position) =>
     switch (oxygen->Array.length, co2->Array.length) {
     | (1, 1) => {oxygen, co2}
     | (1, _) =>
@@ -93,22 +87,16 @@ let getRatings = bitArray => {
       | _ => failwith("Invalid bit count")
       }
     }
-  }
 
   loop(bitArray, bitArray, 0)
 }
 
-let part1 = rates => {
-  rates.gamma->parseIntWithRadix(2) * rates.epsilon->parseIntWithRadix(2)
-}
+let part1 = rates => rates.gamma->parseIntWithRadix(2) * rates.epsilon->parseIntWithRadix(2)
 
-let part2 = ratings => {
+let part2 = ratings =>
   switch (ratings.oxygen, ratings.co2) {
   | ([ox], [co]) => ox->parseIntWithRadix(2) * co->parseIntWithRadix(2)
   | _ => failwith("Invalid ratings")
   }
-}
 
-let solve = lines => {
-  {part1: lines->getBitCounts->getRates->part1, part2: lines->getRatings->part2}
-}
+let solve = lines => {part1: lines->getBitCounts->getRates->part1, part2: lines->getRatings->part2}

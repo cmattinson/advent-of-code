@@ -4,12 +4,11 @@ type coordinate = (int, int)
 type line = {start: coordinate, end: coordinate}
 type lineDirection = Horizontal | Vertical | Diagonal
 
-let unwrapInt = str => {
+let unwrapInt = str =>
   switch str->Int.fromString {
   | Some(v) => v
   | None => failwith(`Invalid int: ${str}`)
   }
-}
 
 let constructLine = str => {
   let split = String.split(str, " -> ")
@@ -29,7 +28,7 @@ let constructLine = str => {
 
 let example = value => value + 0
 
-let getLineDirection = line => {
+let getLineDirection = line =>
   switch (line.start, line.end) {
   | ((x1, y1), (x2, y2)) =>
     switch (x1 == x2, y1 == y2) {
@@ -38,10 +37,9 @@ let getLineDirection = line => {
     | _ => Diagonal
     }
   }
-}
 
 let addLinePoints = (map, minI, maxI, makeCoord) => {
-  let rec go = (map, i) => {
+  let rec go = (map, i) =>
     if i > maxI {
       map
     } else {
@@ -52,7 +50,6 @@ let addLinePoints = (map, minI, maxI, makeCoord) => {
       }
       go(map->Belt.Map.set(coord, count), i + 1)
     }
-  }
 
   go(map, minI)
 }

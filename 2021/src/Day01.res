@@ -25,17 +25,15 @@ let iter = nums => {
   result.increasing
 }
 
-let slidingWindow = nums => {
+let slidingWindow = nums =>
   nums
   ->Array.mapWithIndex((i, _) => nums->Array.slice(~offset=i, ~len=3))
   ->Array.keep(a => a->Array.length == 3)
-}
 
-let windowSums = nums => {
+let windowSums = nums =>
   nums
   ->slidingWindow
   ->Array.map(window => window->Array.reduce(0, (sum, val) => sum + val->Option.getWithDefault(0)))
-}
 
 let solve = nums => {
   let nums = nums->Array.map(Int.fromString)

@@ -4,18 +4,15 @@ type point = {location: (int, int), value: int}
 
 let dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-let parse = input => {
-  input->Array.map(row => row->String.split("")->Array.map(parseInt))
-}
+let parse = input => input->Array.map(row => row->String.split("")->Array.map(parseInt))
 
-let getCell = (grid, r, c) => {
+let getCell = (grid, r, c) =>
   switch grid->Array.get(r) {
   | Some(row) => row->Array.get(c)
   | None => None
   }
-}
 
-let isLowPoint = (grid, r, c) => {
+let isLowPoint = (grid, r, c) =>
   switch grid->getCell(r, c) {
   | Some(cell) =>
     dirs->Array.every(((dr, dc)) => {
@@ -26,11 +23,10 @@ let isLowPoint = (grid, r, c) => {
     })
   | None => false
   }
-}
 
-let getLowPoints = grid => {
-  grid->Array.reduceWithIndex([], (acc, row, r) => {
-    row->Array.reduceWithIndex(acc, (acc, _, c) => {
+let getLowPoints = grid =>
+  grid->Array.reduceWithIndex([], (acc, row, r) =>
+    row->Array.reduceWithIndex(acc, (acc, _, c) =>
       if isLowPoint(grid, r, c) {
         acc->Array.concat([
           {location: (r, c), value: grid->getCell(r, c)->Option.getWithDefault(0)},
@@ -38,9 +34,8 @@ let getLowPoints = grid => {
       } else {
         acc
       }
-    })
-  })
-}
+    )
+  )
 
 let findBasinLowPoint = (grid, r, c) => {
   let rec flow = (r, c) => {

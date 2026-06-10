@@ -4,19 +4,19 @@ let init = input => {
   let buckets = Array.make(9, 0n)
   input
   ->String.split(",")
-  ->Array.forEach(value => {
+  ->Array.forEach(value =>
     switch value->Int.fromString {
     | Some(timer) => {
         let _ = buckets[timer] = Array.getExn(buckets, timer) + 1n
       }
     | None => failwith("Invalid input")
     }
-  })
+  )
   {days: 0, buckets}
 }
 
 let simulate = (initialState, targetDays) => {
-  let rec loop = (buckets, days) => {
+  let rec loop = (buckets, days) =>
     if days == targetDays {
       buckets->Array.reduce(0n, (acc, count) => acc + count)
     } else {
@@ -29,6 +29,5 @@ let simulate = (initialState, targetDays) => {
       let _ = newBuckets[8] = spawning
       loop(newBuckets, days + 1)
     }
-  }
   loop(initialState.buckets, initialState.days)
 }

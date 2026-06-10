@@ -29,30 +29,26 @@ let initBoard = boardStr => {
   let rows =
     boardStr
     ->String.split("\n")
-    ->Array.map(row => {
-      row->String.split(" ")->Array.keep(s => s != "")->Array.map(initCell)
-    })
+    ->Array.map(row => row->String.split(" ")->Array.keep(s => s != "")->Array.map(initCell))
   let size = Array.length(rows)
   {rows, rowCounts: Array.make(size, 0), colCounts: Array.make(size, 0)}
 }
 
-let buildPositions = boards => {
+let buildPositions = boards =>
   boards->Array.reduceWithIndex(Belt.Map.make(~id=module(IntCmp)), (acc, board, bIdx) =>
     board.rows->Array.reduceWithIndex(acc, (acc, row, rIdx) =>
       row->Array.reduceWithIndex(
         acc,
-        (acc, cell, cIdx) => {
+        (acc, cell, cIdx) =>
           switch acc->Belt.Map.get(cell.number) {
           | Some(list) => acc->Belt.Map.set(cell.number, list{(bIdx, rIdx, cIdx), ...list})
           | None => acc->Belt.Map.set(cell.number, list{(bIdx, rIdx, cIdx)})
-          }
-        },
+          },
       )
     )
   )
-}
 
-let markNumber = (game, called) => {
+let markNumber = (game, called) =>
   switch game.positions->Belt.Map.get(called) {
   | Some(positions) =>
     positions->List.reduce(game, (game, (b, r, c)) => {
@@ -77,28 +73,26 @@ let markNumber = (game, called) => {
     })
   | None => game
   }
-}
 
-let initGame = input => {
+let initGame = input =>
   switch input->String.split("\n\n")->List.fromArray {
   | list{nums, ...boards} => {
       let boards = boards->List.toArray->Array.map(initBoard)
       {
         numbers: nums
         ->String.split(",")
-        ->Array.map(num => {
+        ->Array.map(num =>
           switch num->Int.fromString {
           | Some(v) => v
           | None => failwith("Failed to parse game numbers")
           }
-        }),
+        ),
         boards,
         positions: buildPositions(boards),
       }
     }
   | _ => failwith("Invalid game")
   }
-}
 
 let boardWon = board => {
   let size = Array.length(board.rowCounts)
@@ -120,7 +114,7 @@ let boardScore = board =>
 let findWinner = game => game.boards->Array.getBy(boardWon)
 
 let processGame = game => {
-  let rec go = (game, i) => {
+  let rec go = (game, i) =>
     if i >= Array.length(game.numbers) {
       failwith("No winner")
     } else {
@@ -131,14 +125,13 @@ let processGame = game => {
       | None => go(game, i + 1)
       }
     }
-  }
   go(game, 0)
 }
 
 let markWon = (won, i) => won->Array.mapWithIndex((j, w) => j == i ? true : w)
 
 let lastWinner = game => {
-  let rec go = (game, i, won, lastWin) => {
+  let rec go = (game, i, won, lastWin) =>
     if i >= Array.length(game.numbers) || won->Array.every(w => w) {
       lastWin
     } else {
@@ -157,7 +150,6 @@ let lastWinner = game => {
       )
       go(game, i + 1, won, lastWin)
     }
-  }
   go(game, 0, Array.make(Array.length(game.boards), false), None)
 }
 

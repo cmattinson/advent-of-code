@@ -31,7 +31,7 @@ let getMatch = char =>
   }
 
 let getLineType = line => {
-  let rec loop = (remaining, stack) => {
+  let rec loop = (remaining, stack) =>
     switch (remaining, stack) {
     | (list{}, list{}) => Complete
     | (list{}, stack) => Incomplete(stack)
@@ -50,25 +50,24 @@ let getLineType = line => {
         Corrupted(scoreLine(next))
       }
     }
-  }
 
   loop(line->String.split("")->List.fromArray, list{})
 }
 
-let scoreStack = stack => {
+let scoreStack = stack =>
   stack->Array.reduce(0n, (acc, char) =>
-    switch char {
-    | ")" => acc * 5n + 1n
-    | "]" => acc * 5n + 2n
-    | "}" => acc * 5n + 3n
-    | ">" => acc * 5n + 4n
-    | _ => acc
-    }
+    acc * 5n +
+      switch char {
+      | ")" => 1n
+      | "]" => 2n
+      | "}" => 3n
+      | ">" => 4n
+      | _ => acc
+      }
   )
-}
 
 let findMiddle = scores => {
-  let sorted = scores->SortArray.stableSortBy((a, b) => {
+  let sorted = scores->SortArray.stableSortBy((a, b) =>
     if a < b {
       -1
     } else if a > b {
@@ -76,7 +75,7 @@ let findMiddle = scores => {
     } else {
       0
     }
-  })
+  )
 
   let length = Array.length(sorted)
   switch sorted[length / 2] {
@@ -85,14 +84,13 @@ let findMiddle = scores => {
   }
 }
 
-let part1 = types => {
-  types->Array.reduce(0, (acc, line) => {
+let part1 = types =>
+  types->Array.reduce(0, (acc, line) =>
     switch line {
     | Corrupted(score) => acc + score
     | _ => acc
     }
-  })
-}
+  )
 
 let part2 = types => {
   let result =
