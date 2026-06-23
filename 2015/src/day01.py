@@ -1,3 +1,7 @@
+def parse(input: str) -> str:
+    return input
+
+
 def part1(input: str) -> int:
     return input.count("(") - input.count(")")
 
@@ -12,4 +16,4 @@ def part2(input: str) -> int:
 
 
 def solve(input: str) -> tuple[int, int]:
-    return (part1(input), part2(input))
+    return (part1(parse(input)), part2(parse(input)))

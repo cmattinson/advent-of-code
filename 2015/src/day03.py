@@ -51,9 +51,11 @@ def part2(chars: list[str]) -> int:
                 robo_y -= 1
             case _:
                 pass
+        if santa:
+            coordinate_set.add((santa_x, santa_y))
+        else:
+            coordinate_set.add((robo_x, robo_y))
         santa = not santa
-        coordinate_set.add((santa_x, santa_y))
-        coordinate_set.add((robo_x, robo_y))
 
     return len(coordinate_set)
 

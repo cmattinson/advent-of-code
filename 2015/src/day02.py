@@ -3,9 +3,9 @@ def parse(line: str) -> tuple[int, int, int]:
     return int(result[0]), int(result[1]), int(result[2])
 
 
-def calculate_surface_area(l: int, w: int, h: int) -> int:
-    smallest = min(l * w, w * h, h * l)
-    return 2 * l * w + 2 * w * h + 2 * h * l + smallest
+def calculate_surface_area(length: int, width: int, height: int) -> int:
+    smallest = min(length * width, width * height, height * length)
+    return 2 * length * width + 2 * width * height + 2 * height * length + smallest
 
 
 def get_area(line: str) -> int:
@@ -14,23 +14,21 @@ def get_area(line: str) -> int:
 
 
 def part1(lines: list[str]) -> int:
-    result = 0
-    for line in lines:
-        result += get_area(line)
-    return result
+    return sum(get_area(line) for line in lines)
 
 
 def get_bow_length(line: str) -> int:
-    (l, w, h) = parse(line)
-    smallest_perimeter = min(l + l + w + w, w + w + h + h, h + h + l + l)
-    return l * w * h + smallest_perimeter
+    (length, width, height) = parse(line)
+    smallest_perimeter = min(
+        length + length + width + width,
+        width + width + height + height,
+        height + height + length + length,
+    )
+    return length * width * height + smallest_perimeter
 
 
 def part2(lines: list[str]) -> int:
-    result = 0
-    for line in lines:
-        result += get_bow_length(line)
-    return result
+    return sum(get_bow_length(line) for line in lines)
 
 
 def solve(input: str) -> tuple[int, int]:
